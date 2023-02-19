@@ -33,7 +33,7 @@ class YouTubeMusic(AudioProvider):
         """
 
         super().__init__(*args, **kwargs)
-        self.client = YTMusic()
+        self.client = YTMusic(language="zh_CN")
 
     def search(self, song: Song) -> Optional[str]:
         """
@@ -97,18 +97,18 @@ class YouTubeMusic(AudioProvider):
 
         # We didn't find the correct song on the first try so now we get video type results
         # add them to song_results, and get the result with highest score
-        video_results = self.get_results(
-            search_query, filter="videos", ignore_spelling=True
-        )
+        # video_results = self.get_results(
+        #     search_query, filter="videos", ignore_spelling=True
+        # )
 
-        if self.filter_results:
-            # Order video results
-            videos = self.order_results(video_results, song)
-        else:
-            videos = {}
-            if len(video_results) > 0:
-                videos = {video_results[0]["link"]: 100.0}
-
+        # if self.filter_results:
+        #     # Order video results
+        #     videos = self.order_results(video_results, song)
+        # else:
+        #     videos = {}
+        #     if len(video_results) > 0:
+        #         videos = {video_results[0]["link"]: 100.0}
+        videos = {}
         # Merge songs and video results
         results = {**songs, **videos}
 

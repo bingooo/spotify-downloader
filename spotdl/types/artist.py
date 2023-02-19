@@ -134,9 +134,19 @@ class Artist(SongList):
         """
 
         metadata = Artist.get_metadata(url)
-        urls = Artist.get_urls(url)
+        # urls = Artist.get_urls(url)
 
-        return cls(**metadata, urls=urls, songs=[], albums=[])
+        # return cls(**metadata, urls=urls, songs=[], albums=[])
+
+        spotify_client = SpotifyClient()
+        raw_search_results = spotify_client.artist_top_tracks(url)
+        songsu = []
+        for track in raw_search_results["tracks"]:
+            print(track["id"])
+            songsu.append("http://open.spotify.com/track/"
+                    + track["id"])
+        songs: List[Song] = [Song.from_url(url) for url in songsu]
+        return cls(**metadata, urls=songsu, songs=songs, albums=[])
 
     @staticmethod
     def get_albums(url: str) -> List[str]:

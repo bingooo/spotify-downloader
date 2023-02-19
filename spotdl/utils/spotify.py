@@ -138,7 +138,7 @@ class SpotifyClient(Spotify, metaclass=Singleton):
         - auth_manager: The auth manager to use.
         """
 
-        super().__init__(*args, **kwargs)
+        super().__init__(language="zh-CN,zh", *args, **kwargs)
         self._initialized = True
 
     def _get(self, url, args=None, payload=None, **kwargs):

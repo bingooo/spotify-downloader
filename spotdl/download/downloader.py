@@ -452,15 +452,19 @@ class Downloader:
             if self.preserve_original_audio:
                 bitrate = None
 
-            success, result = convert(
-                input_file=temp_file,
-                output_file=output_file,
-                ffmpeg=self.ffmpeg,
-                output_format=self.output_format,
-                bitrate=bitrate,
-                ffmpeg_args=self.ffmpeg_args,
-                progress_handler=display_progress_tracker.ffmpeg_progress_hook,
-            )
+            shutil.move(temp_file, output_file)
+            success = True
+            result = None
+
+            # success, result = convert(
+            #     input_file=temp_file,
+            #     output_file=output_file,
+            #     ffmpeg=self.ffmpeg,
+            #     output_format=self.output_format,
+            #     bitrate=bitrate,
+            #     ffmpeg_args=self.ffmpeg_args,
+            #     progress_handler=display_progress_tracker.ffmpeg_progress_hook,
+            # )
 
             # Remove the temp file
             if temp_file.exists():
